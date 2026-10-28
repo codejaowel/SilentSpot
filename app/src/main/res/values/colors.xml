@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Anthropic Claude Signature Palette (Terracotta Warm Amber & Ivory Cream) -->
+    <color name="colorPrimary">#D97757</color>
+    <color name="colorPrimaryDark">#C15C3D</color>
+    <color name="colorPrimaryLight">#FBF7F1</color>
+    <color name="colorPrimaryVariant">#E07A5F</color>
+    <color name="colorAccent">#D97757</color>
+    <color name="colorAccentLight">#F8EFE6</color>
+
+    <!-- Environmental Status Colors (Sage Emerald, Warm Ochre, Rust Crimson) -->
+    <color name="colorQuiet">#2D6A4F</color>
+    <color name="colorQuietLight">#E8F5E9</color>
+    <color name="colorQuietBorder">#A5D6A7</color>
+
+    <color name="colorModerate">#D4A373</color>
+    <color name="colorModerateLight">#FFF8E1</color>
+    <color name="colorModerateBorder">#FFE082</color>
+
+    <color name="colorNoisy">#B93838</color>
+    <color name="colorNoisyLight">#FFEBEE</color>
+    <color name="colorNoisyBorder">#FFCDD2</color>
+
+    <!-- Claude Warm Canvas & Surface System -->
+    <color name="colorCanvas">#FAFAF7</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOverlay">#F3EBE1</color>
+    <color name="colorBentoCardBg">#FFFFFF</color>
+    <color name="colorBentoSubtle">#F8F4EE</color>
+
+    <!-- Warm Editorial Typography -->
+    <color name="colorTextPrimary">#1D1C1A</color>
+    <color name="colorTextSecondary">#6B6661</color>
+    <color name="colorTextMuted">#9C958D</color>
+    <color name="colorTextOnPrimary">#FFFFFF</color>
+    <color name="colorTextOnAccent">#FFFFFF</color>
+
+    <!-- Borders & Dividers -->
+    <color name="colorBorder">#E8E2D9</color>
+    <color name="colorBorderStrong">#D6CEC4</color>
+
+    <!-- Warm Claude Card Gradients -->
+    <color name="colorGradientStart">#D97757</color>
+    <color name="colorGradientEnd">#C15C3D</color>
+
+    <color name="colorRecommendGradientStart">#2C2A29</color>
+    <color name="colorRecommendGradientEnd">#1D1C1A</color>
+
+    <color name="colorSplashStart">#1D1C1A</color>
+    <color name="colorSplashEnd">#D97757</color>
+
+    <color name="colorRipple">#1AD97757</color>
+    <color name="colorScrim">#601D1C1A</color>
+    <color name="colorDivider">#E8E2D9</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
+</resources>

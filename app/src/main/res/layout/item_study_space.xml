@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="false"
+    app:strokeColor="@color/colorBorder"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <FrameLayout
+            android:id="@+id/frameSpaceIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_icon_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivSpaceIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Study space icon"
+                android:src="@drawable/ic_study_space"
+                app:tint="@color/colorPrimary" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvSpaceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="serif"
+            android:maxLines="1"
+            android:text="Library"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toStartOf="@id/tvSpaceDb"
+            app:layout_constraintStart_toEndOf="@id/frameSpaceIcon"
+            app:layout_constraintTop_toTopOf="@id/frameSpaceIcon" />
+
+        <TextView
+            android:id="@+id/tvSpaceLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Main Library"
+            android:textColor="@color/colorTextMuted"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/tvSpaceDb"
+            app:layout_constraintStart_toEndOf="@id/frameSpaceIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvSpaceName" />
+
+        <TextView
+            android:id="@+id/tvSpaceDb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_db_badge"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:text="32 dB"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerSpaceCard"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frameSpaceIcon" />
+
+        <TextView
+            android:id="@+id/tvSpaceStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_status_quiet"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.05"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="QUIET"
+            android:textColor="@color/colorQuiet"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerSpaceCard" />
+
+        <LinearLayout
+            android:id="@+id/layoutSpaceUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvSpaceStatus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvSpaceStatus">
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:contentDescription="Last updated"
+                android:src="@drawable/ic_clock"
+                app:tint="@color/colorTextMuted" />
+
+            <TextView
+                android:id="@+id/tvSpaceLastUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="10:42 AM"
+                android:textColor="@color/colorTextMuted"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

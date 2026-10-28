@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="spacing_xxs">4dp</dimen>
+    <dimen name="spacing_xs">8dp</dimen>
+    <dimen name="spacing_sm">12dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">20dp</dimen>
+    <dimen name="spacing_xl">24dp</dimen>
+    <dimen name="spacing_2xl">32dp</dimen>
+    <dimen name="spacing_3xl">48dp</dimen>
+
+    <dimen name="radius_xs">4dp</dimen>
+    <dimen name="radius_sm">6dp</dimen>
+    <dimen name="radius_md">10dp</dimen>
+    <dimen name="radius_lg">14dp</dimen>
+    <dimen name="radius_xl">18dp</dimen>
+
+    <dimen name="elevation_card">2dp</dimen>
+    <dimen name="elevation_card_hover">6dp</dimen>
+    <dimen name="elevation_modal">8dp</dimen>
+    <dimen name="elevation_fab">4dp</dimen>
+
+    <dimen name="button_height_primary">52dp</dimen>
+    <dimen name="input_height">56dp</dimen>
+    <dimen name="card_horizontal_margin">16dp</dimen>
+    <dimen name="card_vertical_margin">8dp</dimen>
+    <dimen name="toolbar_height">60dp</dimen>
+
+    <dimen name="text_xs">11sp</dimen>
+    <dimen name="text_sm">13sp</dimen>
+    <dimen name="text_base">15sp</dimen>
+    <dimen name="text_md">17sp</dimen>
+    <dimen name="text_lg">20sp</dimen>
+    <dimen name="text_xl">24sp</dimen>
+    <dimen name="text_2xl">30sp</dimen>
+    <dimen name="text_3xl">40sp</dimen>
+    <dimen name="text_display">56sp</dimen>
+
+    <dimen name="chip_horizontal_padding">12dp</dimen>
+    <dimen name="chip_vertical_padding">4dp</dimen>
+    <dimen name="chip_text_size">11sp</dimen>
+
+    <dimen name="icon_sm">18dp</dimen>
+    <dimen name="icon_md">24dp</dimen>
+    <dimen name="icon_lg">32dp</dimen>
+    <dimen name="icon_xl">48dp</dimen>
+</resources>

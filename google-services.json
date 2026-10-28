@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "210508806451",
+    "project_id": "silentspot-e15ee",
+    "storage_bucket": "silentspot-e15ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210508806451:android:0665e8cc407634e2336646",
+        "android_client_info": {
+          "package_name": "com.example.silentspot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBddLws6B4ZPE-W7Gea8YQeh792pzjKEi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
