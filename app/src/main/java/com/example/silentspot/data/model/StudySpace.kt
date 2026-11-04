@@ -2,6 +2,7 @@ package com.example.silentspot.data.model
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.PropertyName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -14,5 +15,6 @@ data class StudySpace(
     val status: String = "QUIET",
     val deviceId: String = "",
     val lastUpdated: Timestamp? = null,
-    val isAvailable: Boolean = true
+    @get:PropertyName("isAvailable") @set:PropertyName("isAvailable")
+    var isAvailable: Boolean = true
 ) : Parcelable

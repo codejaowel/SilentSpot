@@ -13,6 +13,7 @@ object Constants {
     const val STATUS_NOISY = "NOISY"
 
     const val ROLE_STUDENT = "student"
+    const val ROLE_ADMIN = "admin"
 
     const val NOTIFICATION_CHANNEL_ID = "silentspot_noise_alerts"
     const val NOTIFICATION_CHANNEL_NAME = "Noise Alerts"

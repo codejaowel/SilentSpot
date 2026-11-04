@@ -2,6 +2,7 @@ package com.example.silentspot.data.repository
 
 import com.example.silentspot.data.model.StudySpace
 import com.example.silentspot.utils.Constants
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -11,7 +12,6 @@ object StudySpaceRepository {
 
     private val db get() = FirebaseFirestore.getInstance()
 
-    /** Live list of study spaces, sorted quietest first. Caller must remove() the registration. */
     fun listenToStudySpaces(
         onUpdate: (List<StudySpace>) -> Unit,
         onError: (String) -> Unit
@@ -27,7 +27,40 @@ object StudySpaceRepository {
             onUpdate(spaces.sortedBy { it.noiseLevel })
         }
 
-    /** Live tail of the latest ESP32 device logs, formatted as console lines. */
+    fun addStudySpace(
+        space: StudySpace,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val doc = db.collection(Constants.COLLECTION_STUDY_SPACES).document()
+        val data = hashMapOf(
+            "name" to space.name.trim(),
+            "location" to space.location.trim(),
+            "deviceId" to space.deviceId.trim(),
+            "noiseLevel" to space.noiseLevel,
+            "threshold" to space.threshold,
+            "isAvailable" to space.isAvailable,
+            "lastUpdated" to (space.lastUpdated ?: Timestamp.now())
+        )
+        doc.set(data)
+            .addOnSuccessListener { onSuccess(doc.id) }
+            .addOnFailureListener { onError(it.localizedMessage ?: "Failed to add study space") }
+    }
+
+    fun deleteStudySpace(
+        spaceId: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        if (spaceId.isBlank()) {
+            onError("Invalid study space ID")
+            return
+        }
+        db.collection(Constants.COLLECTION_STUDY_SPACES).document(spaceId).delete()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onError(it.localizedMessage ?: "Failed to delete study space") }
+    }
+
     fun listenToDeviceLogs(
         deviceId: String,
         limit: Long = 8,
@@ -42,7 +75,6 @@ object StudySpaceRepository {
                 else onUpdate(snapshot?.documents.orEmpty().map(::formatLog))
             }
 
-    /** Live dB history from the ESP32 logs (MAX4466), oldest first, for the graph. */
     fun listenToNoiseHistory(
         deviceId: String,
         limit: Long = 30,

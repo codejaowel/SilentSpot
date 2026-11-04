@@ -19,7 +19,6 @@
             android:id="@+id/toolbarDashboard"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/menu_dashboard"
             app:navigationIcon="@null"
             app:title="" />
 
@@ -32,16 +31,22 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollDashboard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="beforeDescendants">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="32dp">
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="40dp">
 
-                {/* Claude-style Warm Header Greeting */}
+                <!-- Header Greeting -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +54,7 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="20dp"
                     android:paddingTop="12dp"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -73,16 +78,41 @@
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="14sp" />
 
-                            <TextView
-                                android:id="@+id/tvDashboardUserName"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="serif"
-                                android:letterSpacing="-0.02"
-                                android:text="Student"
-                                android:textColor="@color/colorTextPrimary"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvDashboardUserName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="serif"
+                                    android:letterSpacing="-0.02"
+                                    android:text="Student"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:textSize="28sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvDashboardRoleBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/bg_db_badge"
+                                    android:backgroundTint="#FBE9E7"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:letterSpacing="0.05"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="3dp"
+                                    android:text="ADMIN"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -117,140 +147,100 @@
                     android:layout_height="1dp"
                     android:background="@color/colorBorder" />
 
-                {/* Claude-style Bento Feature Container */}
+                <!-- 1. CAMPUS NOISE OVERVIEW (ABOVE THE GRAPH) -->
                 <LinearLayout
+                    android:id="@+id/layoutCampusOverview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingHorizontal="16dp"
-                    android:paddingTop="20dp">
+                    android:paddingTop="18dp">
 
-                    {/* Featured Quiet Spot Bento Card */}
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardRecommendation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/colorRecommendGradientStart"
-                        app:cardCornerRadius="24dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_bento_featured"
-                            android:orientation="vertical"
-                            android:padding="22dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <FrameLayout
-                                    android:layout_width="38dp"
-                                    android:layout_height="38dp"
-                                    android:background="@drawable/bg_icon_circle_white">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:contentDescription="Star"
-                                        android:src="@drawable/ic_star"
-                                        app:tint="#D97757" />
-
-                                </FrameLayout>
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:letterSpacing="0.08"
-                                    android:text="OPTIMAL QUIET SPOT"
-                                    android:textColor="#E8E2D9"
-                                    android:textSize="11sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_status_quiet"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:paddingHorizontal="10dp"
-                                    android:paddingVertical="4dp"
-                                    android:text="QUIET"
-                                    android:textColor="#2D6A4F"
-                                    android:textSize="11sp" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tvRecommendName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:fontFamily="serif"
-                                android:letterSpacing="-0.02"
-                                android:text="Loading..."
-                                android:textColor="#FFFFFF"
-                                android:textSize="25sp"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/tvRecommendDb"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_db_badge_white"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:paddingHorizontal="14dp"
-                                    android:paddingVertical="6dp"
-                                    android:text="-- dB"
-                                    android:textColor="#1D1C1A"
-                                    android:textSize="15sp" />
-
-                                <TextView
-                                    android:id="@+id/tvRecommendSubtitle"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="@string/label_quietest_available"
-                                    android:textColor="#E8E2D9"
-                                    android:textSize="13sp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/tvRecommendEmpty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/error_no_spaces"
-                        android:textColor="@color/colorTextMuted"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
-
-                    {/* Claude-style Dual Stats Bento Cards */}
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        {/* Campus Noise Bento Card */}
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="serif"
+                            android:text="Campus Noise Overview"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="@drawable/bg_status_quiet"
+                            android:backgroundTint="@color/colorQuiet" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.05"
+                            android:text="LIVE FEED"
+                            android:textColor="@color/colorQuiet"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Real-time aggregated statistics across all monitored areas."
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="13sp" />
+
+                    <!-- Admin Action Row (Visible only to Admin) -->
+                    <LinearLayout
+                        android:id="@+id/layoutAdminControls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.05"
+                            android:text="MANAGEMENT"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="11sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddStudySpace"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+ Add Space / Device"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            app:backgroundTint="@color/colorPrimaryLight"
+                            app:cornerRadius="14dp"
+                            app:icon="@drawable/ic_add"
+                            app:iconTint="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <!-- Dual Stats Bento Cards (Avg Noise & Active Spaces) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <!-- Campus Noise Bento Card -->
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -268,7 +258,7 @@
                                 android:orientation="vertical"
                                 android:paddingHorizontal="16dp"
                                 android:paddingTop="16dp"
-                                android:paddingBottom="20dp">
+                                android:paddingBottom="18dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -289,7 +279,7 @@
                                         android:layout_marginStart="6dp"
                                         android:fontFamily="sans-serif-medium"
                                         android:letterSpacing="0.05"
-                                        android:text="AVG NOISE"
+                                        android:text="CAMPUS AVG NOISE"
                                         android:textColor="@color/colorTextMuted"
                                         android:textSize="10sp" />
 
@@ -302,7 +292,7 @@
                                     android:layout_marginTop="10dp"
                                     android:fontFamily="serif"
                                     android:letterSpacing="-0.02"
-                                    android:text="38 dB"
+                                    android:text="-- dB"
                                     android:textColor="@color/colorQuiet"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
@@ -324,7 +314,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="6dp"
-                                        android:text="Focus-ready"
+                                        android:text="Across all spaces"
                                         android:textColor="@color/colorTextSecondary"
                                         android:textSize="12sp" />
 
@@ -334,7 +324,7 @@
 
                         </androidx.cardview.widget.CardView>
 
-                        {/* Active Spaces Bento Card */}
+                        <!-- Active Spaces Bento Card -->
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -352,7 +342,7 @@
                                 android:orientation="vertical"
                                 android:paddingHorizontal="16dp"
                                 android:paddingTop="16dp"
-                                android:paddingBottom="20dp">
+                                android:paddingBottom="18dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -373,7 +363,7 @@
                                         android:layout_marginStart="6dp"
                                         android:fontFamily="sans-serif-medium"
                                         android:letterSpacing="0.05"
-                                        android:text="SPACES ACTIVE"
+                                        android:text="SPACES MONITORED"
                                         android:textColor="@color/colorTextMuted"
                                         android:textSize="10sp" />
 
@@ -386,7 +376,7 @@
                                     android:layout_marginTop="10dp"
                                     android:fontFamily="serif"
                                     android:letterSpacing="-0.02"
-                                    android:text="4 Active"
+                                    android:text="-- Active"
                                     android:textColor="@color/colorTextPrimary"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
@@ -409,7 +399,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="4dp"
-                                        android:text="Peak: 8am - 11am"
+                                        android:text="Live sensor feed"
                                         android:textColor="@color/colorTextSecondary"
                                         android:textSize="12sp" />
 
@@ -421,53 +411,108 @@
 
                     </LinearLayout>
 
-                    {/* Claude-style Warm Tip Card */}
+                    <!-- Featured Quiet Spot Bento Card -->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardRecommendation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        app:cardBackgroundColor="@color/colorOverlay"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/colorBorder"
-                        app:strokeWidth="1dp">
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="@color/colorRecommendGradientStart"
+                        app:cardCornerRadius="22dp"
+                        app:cardElevation="3dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:contentDescription="Focus tip"
-                                android:src="@drawable/ic_info"
-                                app:tint="@color/colorPrimary" />
+                            android:background="@drawable/bg_bento_featured"
+                            android:orientation="vertical"
+                            android:padding="18dp">
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <FrameLayout
+                                    android:layout_width="34dp"
+                                    android:layout_height="34dp"
+                                    android:background="@drawable/bg_icon_circle_white">
+
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="Star"
+                                        android:src="@drawable/ic_star"
+                                        app:tint="#D97757" />
+
+                                </FrameLayout>
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="Quiet Study Guideline"
-                                    android:textColor="@color/colorTextPrimary"
-                                    android:textSize="13sp" />
+                                    android:letterSpacing="0.08"
+                                    android:text="RECOMMENDED QUIETEST SPOT"
+                                    android:textColor="#E8E2D9"
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:text="Please use headphones and keep devices on silent in active study zones."
-                                    android:textColor="@color/colorTextSecondary"
-                                    android:textSize="12sp" />
+                                    android:background="@drawable/bg_status_quiet"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="4dp"
+                                    android:text="QUIETEST"
+                                    android:textColor="#2D6A4F"
+                                    android:textSize="11sp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvRecommendName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="serif"
+                                android:letterSpacing="-0.02"
+                                android:text="Loading..."
+                                android:textColor="#FFFFFF"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvRecommendDb"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_db_badge_white"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:paddingHorizontal="14dp"
+                                    android:paddingVertical="5dp"
+                                    android:text="-- dB"
+                                    android:textColor="#1D1C1A"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tvRecommendSubtitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
+                                    android:text="Quietest space • Tap to select on graph"
+                                    android:textColor="#E8E2D9"
+                                    android:textSize="13sp" />
 
                             </LinearLayout>
 
@@ -475,56 +520,261 @@
 
                     </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
-
-                {/* Section Header */}
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="22dp"
-                    android:paddingBottom="10dp">
-
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="serif"
-                        android:text="@string/label_all_spaces"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_marginEnd="6dp"
-                        android:background="@drawable/bg_status_quiet"
-                        android:backgroundTint="@color/colorQuiet" />
-
-                    <TextView
+                        android:id="@+id/tvRecommendEmpty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:letterSpacing="0.05"
-                        android:text="LIVE"
-                        android:textColor="@color/colorQuiet"
-                        android:textSize="11sp" />
+                        android:layout_marginTop="12dp"
+                        android:text="@string/error_no_spaces"
+                        android:textColor="@color/colorTextMuted"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
-                {/* RecyclerView */}
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvStudySpaces"
+                <!-- 2. LIVE NOISE MONITOR & GRAPH CARD (BELOW THE OVERVIEW) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardLiveGraphMonitor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="16dp"
-                    android:paddingBottom="8dp" />
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="18dp"
+                    app:cardBackgroundColor="@color/colorSurface"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/colorBorder"
+                    app:strokeWidth="1dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <!-- Header Row & Status Badge -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_status_quiet"
+                                android:backgroundTint="@color/colorQuiet" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:letterSpacing="0.08"
+                                android:text="LIVE NOISE GRAPH MONITOR"
+                                android:textColor="@color/colorQuiet"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvGraphStatusBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_status_quiet"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"
+                                android:text="QUIET"
+                                android:textColor="@color/colorQuiet"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <!-- Selected Room Details Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvSelectedRoomName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="serif"
+                                    android:letterSpacing="-0.02"
+                                    android:text="Loading space..."
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:textSize="21sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvSelectedRoomLocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Location info"
+                                    android:textColor="@color/colorTextMuted"
+                                    android:textSize="13sp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvSelectedRoomDb"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_db_badge"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingHorizontal="14dp"
+                                android:paddingVertical="6dp"
+                                android:text="-- dB"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <!-- Metadata Badges: Threshold, Availability, Sensor ID -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvSelectedRoomThreshold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_bento_subtle"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="Threshold: 60 dB"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvSelectedRoomAvailability"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_bento_subtle"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="Available"
+                                android:textColor="@color/colorQuiet"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvSelectedRoomDevice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_bento_subtle"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="Sensor ID"
+                                android:textColor="@color/colorTextMuted"
+                                android:textSize="11sp"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <!-- Live Waveform Graph -->
+                        <TextView
+                            android:id="@+id/tvSelectedRoomGraphCaption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="sans-serif"
+                            android:text="Live sensor waveform (dashed line = threshold limit):"
+                            android:textColor="@color/colorTextMuted"
+                            android:textSize="11sp" />
+
+                        <com.example.silentspot.ui.studyspace.NoiseGraphView
+                            android:id="@+id/noiseGraphDashboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="165dp"
+                            android:layout_marginTop="8dp" />
+
+                        <!-- DROPDOWN SELECTOR (BELOW THE GRAPH) -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Select Study Space:"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="13sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilSpaceDropdown"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            app:boxCornerRadiusBottomEnd="14dp"
+                            app:boxCornerRadiusBottomStart="14dp"
+                            app:boxCornerRadiusTopEnd="14dp"
+                            app:boxCornerRadiusTopStart="14dp"
+                            app:boxStrokeColor="@color/colorPrimary"
+                            app:endIconTint="@color/colorPrimary"
+                            app:startIconDrawable="@drawable/ic_study_space"
+                            app:startIconTint="@color/colorPrimary">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/actvSpaceSelector"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Choose a study space..."
+                                android:inputType="none"
+                                android:paddingVertical="14dp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="14sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Full Details & Console Logs Action Button (Admin Only) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnViewRoomDetails"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Open Space Details &amp; Hardware Logs →"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13sp"
+                            android:visibility="gone"
+                            app:backgroundTint="@color/colorPrimaryLight"
+                            app:cornerRadius="12dp" />
+
+                        <!-- Delete Space Action Button (Admin Only) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDeleteSelectedSpace"
+                            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Delete This Study Space"
+                            android:textColor="#B93838"
+                            android:textSize="13sp"
+                            android:visibility="gone"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_delete"
+                            app:iconTint="#B93838"
+                            app:strokeColor="#FFCDD2" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Loading & Empty States -->
                 <LinearLayout
                     android:id="@+id/layoutDashboardEmpty"
                     android:layout_width="match_parent"

@@ -12,7 +12,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.silentspot.R
 
-/** Simple line graph of recent dB readings, with a dashed threshold line. */
 class NoiseGraphView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {

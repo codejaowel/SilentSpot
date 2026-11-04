@@ -2,6 +2,8 @@ package com.example.silentspot.ui.studyspace
 
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.silentspot.R
@@ -11,6 +13,9 @@ import com.example.silentspot.databinding.ActivityStudySpaceDetailBinding
 import com.example.silentspot.utils.Constants
 import com.example.silentspot.utils.NoiseLevelUtils
 import com.example.silentspot.utils.NoiseLevelUtils.applyStatus
+import com.example.silentspot.utils.SessionManager
+import com.example.silentspot.utils.toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.ListenerRegistration
 
 class StudySpaceDetailActivity : AppCompatActivity() {
@@ -18,9 +23,18 @@ class StudySpaceDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudySpaceDetailBinding
     private var logsListener: ListenerRegistration? = null
     private var historyListener: ListenerRegistration? = null
+    private var currentSpace: StudySpace? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val currentUser = SessionManager(this).getUser()
+        if (currentUser == null || !currentUser.isAdmin) {
+            toast("Access denied: Space details and hardware logs are restricted to Administrators.")
+            finish()
+            return
+        }
+
         binding = ActivityStudySpaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,10 +42,45 @@ class StudySpaceDetailActivity : AppCompatActivity() {
         binding.toolbarDetail.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         val space = readSpace() ?: return finish()
+        currentSpace = space
         bind(space)
         val deviceId = space.deviceId.ifEmpty { Constants.DEFAULT_DEVICE_ID }
         listenForLogs(deviceId)
         listenForHistory(deviceId, space)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_space_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.action_delete_space) {
+            confirmDeleteSpace()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun confirmDeleteSpace() {
+        val space = currentSpace ?: return
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete Study Space?")
+            .setMessage("Are you sure you want to permanently delete '${space.name}' (${space.location}) and its sensor mappings?")
+            .setPositiveButton("Delete") { _, _ ->
+                StudySpaceRepository.deleteStudySpace(space.id,
+                    onSuccess = {
+                        toast("Deleted study space '${space.name}'")
+                        finish()
+                    },
+                    onError = { err ->
+                        toast("Failed to delete space: $err")
+                    }
+                )
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     @Suppress("DEPRECATION")
@@ -71,7 +120,6 @@ class StudySpaceDetailActivity : AppCompatActivity() {
         )
     }
 
-    /** Feeds the graph and keeps the big dB number live with the newest reading. */
     private fun listenForHistory(deviceId: String, space: StudySpace) {
         historyListener = StudySpaceRepository.listenToNoiseHistory(deviceId,
             onUpdate = { values ->

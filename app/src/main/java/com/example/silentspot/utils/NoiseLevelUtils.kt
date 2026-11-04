@@ -30,7 +30,6 @@ object NoiseLevelUtils {
         else -> R.drawable.bg_status_quiet
     }
 
-    /** Styles a status badge for the given dB level and returns the status. */
     fun TextView.applyStatus(db: Double): String {
         val status = classify(db)
         text = status

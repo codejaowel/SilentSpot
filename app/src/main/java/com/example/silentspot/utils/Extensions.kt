@@ -14,7 +14,6 @@ fun View.visibleIf(visible: Boolean) {
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-/** Starts [destination] as a fresh task and finishes the current activity. */
 fun Activity.navigateTo(destination: Class<*>) {
     startActivity(Intent(this, destination).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
     finish()

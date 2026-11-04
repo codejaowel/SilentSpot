@@ -21,14 +21,12 @@
 
             <View
                 android:id="@+id/viewRegisterHeader"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
                 android:background="@drawable/bg_splash"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/layoutRegisterHeader"
@@ -103,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:hint="@string/label_first_name"
-                        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+                        app:startIconDrawable="@drawable/ic_user"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -123,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/label_middle_name"
-                        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+                        app:startIconDrawable="@drawable/ic_user"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -143,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/label_last_name"
-                        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+                        app:startIconDrawable="@drawable/ic_user"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -163,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/label_email"
-                        app:startIconDrawable="@android:drawable/ic_dialog_email"
+                        app:startIconDrawable="@drawable/ic_email"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -185,7 +183,7 @@
                         android:hint="@string/label_password"
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/colorTextMuted"
-                        app:startIconDrawable="@android:drawable/ic_lock_lock"
+                        app:startIconDrawable="@drawable/ic_lock"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -207,7 +205,7 @@
                         android:hint="@string/label_confirm_password"
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/colorTextMuted"
-                        app:startIconDrawable="@android:drawable/ic_lock_lock"
+                        app:startIconDrawable="@drawable/ic_lock"
                         app:startIconTint="@color/colorTextMuted">
 
                         <com.google.android.material.textfield.TextInputEditText

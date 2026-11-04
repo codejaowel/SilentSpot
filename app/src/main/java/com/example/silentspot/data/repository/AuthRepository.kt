@@ -1,6 +1,8 @@
 package com.example.silentspot.data.repository
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.example.silentspot.data.model.User
 import com.example.silentspot.utils.Constants
@@ -12,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 object AuthRepository {
 
     private const val TAG = "AuthRepository"
+    private const val NETWORK_TIMEOUT_MS = 12_000L
+    private val mainHandler = Handler(Looper.getMainLooper())
+
     private val users get() = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_USERS)
 
     fun currentUser(context: Context): User? = SessionManager(context).getUser()
@@ -27,8 +32,21 @@ object AuthRepository {
         onSuccess: (User) -> Unit,
         onError: (String) -> Unit
     ) {
+        var completed = false
+        val timeoutRunnable = Runnable {
+            if (!completed) {
+                completed = true
+                onError("Connection timed out. Please check your internet connection and try again.")
+            }
+        }
+        mainHandler.postDelayed(timeoutRunnable, NETWORK_TIMEOUT_MS)
+
         users.whereEqualTo("email", email).get()
             .addOnSuccessListener { result ->
+                if (completed) return@addOnSuccessListener
+                completed = true
+                mainHandler.removeCallbacks(timeoutRunnable)
+
                 val user = result.documents
                     .firstOrNull { PasswordUtils.verify(password, it.getString("password").orEmpty()) }
                     ?.let { it.toObject(User::class.java)?.copy(uid = it.id) }
@@ -40,7 +58,12 @@ object AuthRepository {
                     onSuccess(user)
                 }
             }
-            .addOnFailureListener { onError(errorMessage(it)) }
+            .addOnFailureListener {
+                if (completed) return@addOnFailureListener
+                completed = true
+                mainHandler.removeCallbacks(timeoutRunnable)
+                onError(errorMessage(it))
+            }
     }
 
     fun register(
@@ -50,12 +73,26 @@ object AuthRepository {
         lastName: String,
         email: String,
         password: String,
+        role: String = if (email.contains("admin", ignoreCase = true)) Constants.ROLE_ADMIN else Constants.ROLE_STUDENT,
         onSuccess: (User) -> Unit,
         onError: (String) -> Unit
     ) {
+        var completed = false
+        val timeoutRunnable = Runnable {
+            if (!completed) {
+                completed = true
+                onError("Connection timed out. Please check your internet connection and try again.")
+            }
+        }
+        mainHandler.postDelayed(timeoutRunnable, NETWORK_TIMEOUT_MS)
+
         users.whereEqualTo("email", email).get()
             .addOnSuccessListener { existing ->
+                if (completed) return@addOnSuccessListener
+
                 if (!existing.isEmpty) {
+                    completed = true
+                    mainHandler.removeCallbacks(timeoutRunnable)
                     onError("This email address is already registered.")
                     return@addOnSuccessListener
                 }
@@ -69,21 +106,33 @@ object AuthRepository {
                     fullName = listOf(firstName, middleName, lastName).filter { it.isNotBlank() }.joinToString(" "),
                     email = email,
                     password = PasswordUtils.hash(password),
-                    role = Constants.ROLE_STUDENT,
+                    role = role,
                     createdAt = Timestamp.now()
                 )
 
                 doc.set(user)
                     .addOnSuccessListener {
+                        if (completed) return@addOnSuccessListener
+                        completed = true
+                        mainHandler.removeCallbacks(timeoutRunnable)
                         SessionManager(context).save(user)
                         onSuccess(user)
                     }
-                    .addOnFailureListener { onError(errorMessage(it)) }
+                    .addOnFailureListener {
+                        if (completed) return@addOnFailureListener
+                        completed = true
+                        mainHandler.removeCallbacks(timeoutRunnable)
+                        onError(errorMessage(it))
+                    }
             }
-            .addOnFailureListener { onError(errorMessage(it)) }
+            .addOnFailureListener {
+                if (completed) return@addOnFailureListener
+                completed = true
+                mainHandler.removeCallbacks(timeoutRunnable)
+                onError(errorMessage(it))
+            }
     }
 
-    /** Refreshes the profile from Firestore, falling back to the cached session. */
     fun fetchProfile(context: Context, onResult: (User?) -> Unit) {
         val session = SessionManager(context)
         val cached = session.getUser() ?: return onResult(null)

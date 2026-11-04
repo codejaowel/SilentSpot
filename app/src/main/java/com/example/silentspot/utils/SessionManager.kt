@@ -3,7 +3,6 @@ package com.example.silentspot.utils
 import android.content.Context
 import com.example.silentspot.data.model.User
 
-/** Persists the logged-in user. Keys are unchanged so existing sessions stay valid. */
 class SessionManager(context: Context) {
 
     private val prefs = context.applicationContext.getSharedPreferences("silentspot_user_session", Context.MODE_PRIVATE)
