@@ -5,8 +5,8 @@ object Constants {
     const val COLLECTION_USERS = "users"
     const val COLLECTION_STUDY_SPACES = "studySpaces"
 
-    const val QUIET_MAX_DB = 40.0
-    const val MODERATE_MAX_DB = 60.0
+    const val QUIET_MAX_DB = 60.0
+    const val MODERATE_MAX_DB = 70.0
 
     const val STATUS_QUIET = "QUIET"
     const val STATUS_MODERATE = "MODERATE"

@@ -35,12 +35,14 @@ class ExampleUnitTest {
     @Test
     fun testNoiseLevelClassification() {
         assertEquals(Constants.STATUS_QUIET, NoiseLevelUtils.classify(25.0))
+        assertEquals(Constants.STATUS_QUIET, NoiseLevelUtils.classify(55.0))
         assertEquals(Constants.STATUS_QUIET, NoiseLevelUtils.classify(Constants.QUIET_MAX_DB))
 
-        assertEquals(Constants.STATUS_MODERATE, NoiseLevelUtils.classify(40.1))
+        assertEquals(Constants.STATUS_MODERATE, NoiseLevelUtils.classify(60.1))
+        assertEquals(Constants.STATUS_MODERATE, NoiseLevelUtils.classify(65.0))
         assertEquals(Constants.STATUS_MODERATE, NoiseLevelUtils.classify(Constants.MODERATE_MAX_DB))
 
-        assertEquals(Constants.STATUS_NOISY, NoiseLevelUtils.classify(60.1))
+        assertEquals(Constants.STATUS_NOISY, NoiseLevelUtils.classify(70.1))
         assertEquals(Constants.STATUS_NOISY, NoiseLevelUtils.classify(85.0))
     }
 

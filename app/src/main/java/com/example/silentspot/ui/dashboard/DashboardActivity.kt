@@ -41,6 +41,8 @@ class DashboardActivity : AppCompatActivity() {
     private var currentSpaces: List<StudySpace> = emptyList()
     private var selectedSpace: StudySpace? = null
     private var selectedSpaceId: String? = null
+    private var currentSpaceNames: List<String> = emptyList()
+    private var activeListeningDeviceId: String? = null
     private var isAdmin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +64,11 @@ class DashboardActivity : AppCompatActivity() {
         loadGreeting()
         listenForStudySpaces()
 
-        runCatching {
-            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC_NOISY_ALERTS)
-        }.onFailure { Log.w("DashboardActivity", "FCM subscription failed", it) }
+        Thread {
+            runCatching {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC_NOISY_ALERTS)
+            }.onFailure { Log.w("DashboardActivity", "FCM subscription failed", it) }
+        }.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -149,27 +153,41 @@ class DashboardActivity : AppCompatActivity() {
         // 2. Setup Dropdown Selector for All Spaces (Placed BELOW the graph)
         if (spaces.isNotEmpty()) {
             val spaceNames = spaces.map { it.name }
-            val adapter = ArrayAdapter(this@DashboardActivity, android.R.layout.simple_dropdown_item_1line, spaceNames)
-            actvSpaceSelector.setAdapter(adapter)
+            if (currentSpaceNames != spaceNames) {
+                currentSpaceNames = spaceNames
+                val adapter = ArrayAdapter(this@DashboardActivity, android.R.layout.simple_dropdown_item_1line, spaceNames)
+                actvSpaceSelector.setAdapter(adapter)
 
-            actvSpaceSelector.setOnItemClickListener { _, _, position, _ ->
-                val chosen = spaces.getOrNull(position) ?: return@setOnItemClickListener
-                selectRoom(chosen)
+                actvSpaceSelector.setOnItemClickListener { _, _, position, _ ->
+                    val chosen = spaces.getOrNull(position) ?: return@setOnItemClickListener
+                    selectRoom(chosen)
+                }
             }
 
-            val spaceToSelect = spaces.find { it.id == selectedSpaceId } ?: quietest ?: spaces.first()
-            selectRoom(spaceToSelect)
+            val matchingSpace = spaces.find { it.id == selectedSpaceId }
+            if (matchingSpace != null) {
+                updateRoomLabels(matchingSpace)
+            } else {
+                val spaceToSelect = quietest ?: spaces.first()
+                selectRoom(spaceToSelect)
+            }
         } else {
             selectedSpace = null
+            selectedSpaceId = null
+            activeListeningDeviceId = null
+            historyListener?.remove()
+            historyListener = null
             btnDeleteSelectedSpace.visibleIf(false)
         }
     }
 
-    private fun selectRoom(space: StudySpace) = with(binding) {
+    private fun updateRoomLabels(space: StudySpace) = with(binding) {
         selectedSpace = space
         selectedSpaceId = space.id
 
-        actvSpaceSelector.setText(space.name, false)
+        if (actvSpaceSelector.text.toString() != space.name) {
+            actvSpaceSelector.setText(space.name, false)
+        }
 
         tvSelectedRoomName.text = space.name
         tvSelectedRoomLocation.text = space.location.ifEmpty { "Campus Area" }
@@ -198,6 +216,16 @@ class DashboardActivity : AppCompatActivity() {
         } else {
             btnViewRoomDetails.setOnClickListener(null)
         }
+    }
+
+    private fun selectRoom(space: StudySpace) = with(binding) {
+        updateRoomLabels(space)
+
+        val deviceId = space.deviceId.ifEmpty { Constants.DEFAULT_DEVICE_ID }
+        if (activeListeningDeviceId == deviceId && historyListener != null) {
+            return@with
+        }
+        activeListeningDeviceId = deviceId
 
         historyListener?.remove()
         noiseGraphDashboard.setData(emptyList(), space.threshold)
@@ -238,7 +266,6 @@ class DashboardActivity : AppCompatActivity() {
                 val name = dialogBinding.etSpaceName.textOf()
                 val location = dialogBinding.etSpaceLocation.textOf()
                 val deviceId = dialogBinding.etDeviceId.textOf().ifEmpty { "esp32_sensor_${System.currentTimeMillis() % 1000}" }
-                val thresholdStr = dialogBinding.etThreshold.textOf()
                 val isAvailable = dialogBinding.switchAvailable.isChecked
 
                 if (name.isEmpty()) {
@@ -247,7 +274,7 @@ class DashboardActivity : AppCompatActivity() {
                 }
                 dialogBinding.tilSpaceName.error = null
 
-                val threshold = thresholdStr.toIntOrNull() ?: 50
+                val threshold = 60
 
                 val newSpace = StudySpace(
                     name = name,
@@ -322,6 +349,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onDestroy() {
         historyListener?.remove()
         spacesListener?.remove()
+        activeListeningDeviceId = null
         super.onDestroy()
     }
 }

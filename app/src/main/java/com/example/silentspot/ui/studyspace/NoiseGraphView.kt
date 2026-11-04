@@ -39,6 +39,8 @@ class NoiseGraphView @JvmOverloads constructor(
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.colorTextMuted); textSize = 10 * density
     }
+    private val linePath = Path()
+    private val fillPath = Path()
 
     fun setData(values: List<Float>, threshold: Int) {
         points = values
@@ -66,16 +68,21 @@ class NoiseGraphView @JvmOverloads constructor(
         }
 
         val step = (right - left) / (points.size - 1)
-        val line = Path()
+        linePath.reset()
         points.forEachIndexed { i, v ->
             val x = left + i * step
-            if (i == 0) line.moveTo(x, y(v)) else line.lineTo(x, y(v))
+            if (i == 0) linePath.moveTo(x, y(v)) else linePath.lineTo(x, y(v))
         }
-        val fill = Path(line).apply { lineTo(right, bottom); lineTo(left, bottom); close() }
+        fillPath.reset()
+        fillPath.set(linePath)
+        fillPath.lineTo(right, bottom)
+        fillPath.lineTo(left, bottom)
+        fillPath.close()
+
         fillPaint.shader = LinearGradient(0f, top, 0f, bottom,
             (lineColor and 0x00FFFFFF) or 0x55000000, lineColor and 0x00FFFFFF, Shader.TileMode.CLAMP)
 
-        canvas.drawPath(fill, fillPaint)
-        canvas.drawPath(line, linePaint)
+        canvas.drawPath(fillPath, fillPaint)
+        canvas.drawPath(linePath, linePaint)
     }
 }
